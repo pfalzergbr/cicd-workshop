@@ -52,7 +52,7 @@ jobs:
           path: test-results
       - store_artifacts:
           path: test-results
-    deploy-to-heroku:
+  deploy-to-heroku:
       docker: 
         - image: cimg/base:stable
       steps:
@@ -75,13 +75,11 @@ workflows:
       - build-and-test
       - dependency-vulnerability-scan
       - build-docker:
-          requires: 
+          requires:
             - build-and-test
             - dependency-vulnerability-scan
-      - deploy-to-heroku: 
-          requires: 
-            - build-and-test
-            - dependency-vulnerability-scan
+      - deploy-to-heroku:
+          requires:
             - build-docker
 
           
