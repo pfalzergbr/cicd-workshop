@@ -78,7 +78,7 @@ workflows:
           requires: 
             - build-and-test
             - dependency-vulnerability-scan
-      - deploy-heroku: 
+      - deploy-to-heroku: 
           requires: 
             - build-and-test
             - dependency-vulnerability-scan
