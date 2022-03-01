@@ -143,7 +143,7 @@ jobs:
 - Add the Auth token to your environment variables - `SNYK_TOKEN`
 
 - Add Snyk orb: 
-
+ 
 ```yaml
 orbs: 
     node: circleci/node@5.0.0
