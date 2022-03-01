@@ -5,6 +5,8 @@ orbs:
   node: circleci/node@5.0.0
   snyk: snyk/snyk@1.1.2
   docker: circleci/docker@2.0.2
+    heroku: circleci/heroku@1.2.6
+
 # Define a job to be invoked later in a workflow.
 # See: https://circleci.com/docs/2.0/configuration-reference/#jobs
 jobs:
@@ -50,6 +52,20 @@ jobs:
           path: test-results
       - store_artifacts:
           path: test-results
+    deploy-to-heroku:
+        docker: 
+          - image: cimg/base:stable
+        steps:
+          - heroku/install
+          - heroku/check-authentication
+          - checkout
+          - setup_remote_docker
+          - heroku/push-docker-image:
+              app-name: hello-circleci-connect-dev
+              process-types: web
+          - heroku/release-docker-image:
+              app-name: hello-circleci-connect-dev
+              process-types: web
 
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
@@ -62,4 +78,9 @@ workflows:
           requires: 
             - build-and-test
             - dependency-vulnerability-scan
+      - deploy-heroku: 
+          requires: 
+            - build-and-test
+            - dependency-vulnerability-scan
+
           
