@@ -222,6 +222,7 @@ workflows:
       - build-docker
 ```
 
+
 - Add `requires` stanza to the job in the workflow, which ensures that verification jobs must complete before building the Docker image.
 
 ```yaml
