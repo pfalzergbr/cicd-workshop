@@ -32,8 +32,12 @@ jobs:
       - snyk/scan:
           fail-on-issues: true
   build-and-test:
+    parameters:
+      node_version:
+        type: string
+        default: 16.14.0
     docker:
-      - image: cimg/node:16.14.0
+      - image: cimg/node:<< parameters.node_version >>
     steps:
       - checkout
       - node/install-packages
@@ -72,7 +76,10 @@ jobs:
 workflows:
   run-tests:
     jobs:
-      - build-and-test
+      - build-and-test:
+          matrix:
+            parameters:
+              node_version: ["16.14.0", "14.19.0", "17.6.0" ]
       - dependency-vulnerability-scan
       - build-docker:
           requires:
