@@ -38,15 +38,16 @@ jobs:
         default: 16.14.0
     docker:
       - image: cimg/node:<< parameters.node_version >>
+    parallelism: 4
     steps:
       - checkout
       - node/install-packages
       - run:
           name: Run tests
-          command: npm run test-ci
-      - run:
-          name: Run tests
-          command: npm run test-ci
+          command: |
+            echo $(circleci tests glob "test/**/*.test.js")
+            circleci tests glob "test/**/*.test.js" | circleci tests split |
+            xargs npm run test-ci
       - run:
           name: Copy tests results for storing
           command: |
