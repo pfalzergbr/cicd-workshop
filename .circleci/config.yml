@@ -48,23 +48,23 @@ jobs:
             echo $(circleci tests glob "test/**/*.test.js")
             circleci tests glob "test/**/*.test.js" | circleci tests split |
             xargs npm run test-ci
-      - run:
-          name: Process test report
-          when: always
-          command: |
-            # Convert absolute paths to relative to support splitting tests by timing
-            if [ -e ~/test-results.xml ]; then
-              sed -i "s|`pwd`/||g" test-results.xml
-            fi
-      - run:
-          name: Copy tests results for storing
-          command: |
-            cp test-results.xml test-results/
-          when: always
-      - store_test_results:
-          path: test-results
-      - store_artifacts:
-          path: test-results
+      # - run:
+      #     name: Process test report
+      #     when: always
+      #     command: |
+      #       # Convert absolute paths to relative to support splitting tests by timing
+      #       if [ -e ~/test-results.xml ]; then
+      #         sed -i "s|`pwd`/||g" test-results.xml
+      #       fi
+      # - run:
+      #     name: Copy tests results for storing
+      #     command: |
+      #       cp test-results.xml test-results/
+      #     when: always
+      # - store_test_results:
+      #     path: test-results
+      # - store_artifacts:
+      #     path: test-results
   deploy-to-heroku:
       docker: 
         - image: cimg/base:stable
@@ -74,10 +74,10 @@ jobs:
         - checkout
         - setup_remote_docker
         - heroku/push-docker-image:
-            app-name: hello-circleci-connect-dev
+            app-name: circleci-test
             process-types: web
         - heroku/release-docker-image:
-            app-name: hello-circleci-connect-dev
+            app-name: pfalzer/cicd-workshop-1-03-22
             process-types: web
 
 # Invoke jobs via workflows
