@@ -18,10 +18,10 @@ jobs:
       - setup_remote_docker
       - docker/check
       - docker/build:
-          image: $DOCKER_LOGIN/${CIRCLE_PROJECT_REPONAME}-1-March-22
+          image: $DOCKER_LOGIN/${CIRCLE_PROJECT_REPONAME}-1-03-22
           tag: 0.1.<< pipeline.number >>
       - docker/push:
-          image: $DOCKER_LOGIN/${CIRCLE_PROJECT_REPONAME}-1-March-22
+          image: $DOCKER_LOGIN/${CIRCLE_PROJECT_REPONAME}-1-03-22
           tag: 0.1.<< pipeline.number >>
   dependency-vulnerability-scan:
     docker:
@@ -82,5 +82,6 @@ workflows:
           requires: 
             - build-and-test
             - dependency-vulnerability-scan
+            - build-docker
 
           
