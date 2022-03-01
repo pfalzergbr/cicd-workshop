@@ -58,8 +58,8 @@ workflows:
     jobs:
       - build-and-test
       - dependency-vulnerability-scan
-      - build-docker
-        requires: 
-          - build-and-test
-          - dependency-vulnerability-scan
+      - build-docker:
+          requires: 
+            - build-and-test
+            - dependency-vulnerability-scan
           
