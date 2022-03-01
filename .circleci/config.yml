@@ -54,7 +54,7 @@ jobs:
       #     command: |
       #       # Convert absolute paths to relative to support splitting tests by timing
       #       if [ -e ~/test-results.xml ]; then
-      #         sed -i "s|`pwd`/||g" test-results.xml
+      #         sed -i "s|`pwd`/||g" ~/test-results.xml
       #       fi
       # - run:
       #     name: Copy tests results for storing
@@ -74,7 +74,7 @@ jobs:
         - checkout
         - setup_remote_docker
         - heroku/push-docker-image:
-            app-name: circleci-test
+            app-name: pfalzer/cicd-workshop-1-03-22
             process-types: web
         - heroku/release-docker-image:
             app-name: pfalzer/cicd-workshop-1-03-22
